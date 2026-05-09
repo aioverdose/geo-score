@@ -167,7 +167,11 @@ export default function ReportPage() {
                       <h3 className="font-semibold text-gray-900 print:text-xs">
                         [{item.priority.toUpperCase()}] {item.platform} — {item.fix}
                       </h3>
-                      <p className="text-sm text-gray-700 print:text-xs mt-1">{item.instruction}</p>
+                      <ol className="text-sm text-gray-700 print:text-xs mt-2 ml-4 list-decimal space-y-1">
+                        {item.steps.map((step, stepIdx) => (
+                          <li key={stepIdx}>{step}</li>
+                        ))}
+                      </ol>
                     </div>
                     <span className="text-xs bg-blue-200 text-blue-800 px-2 py-1 rounded print:ml-0 ml-2">
                       +{item.impactPoints} pts
