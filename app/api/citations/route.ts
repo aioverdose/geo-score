@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const citations = await checkAICitations(businessName, city, state);
+    const citations = await checkAICitations(businessName, city, state, trade);
     return NextResponse.json(citations);
   } catch (error: any) {
     console.error("Citations API error:", error);
