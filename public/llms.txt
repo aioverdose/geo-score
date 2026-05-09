@@ -1,0 +1,215 @@
+# GEO Score — AI Local Visibility Auditor
+
+## What This Tool Does
+
+GEO Score audits how visible local businesses are to AI search engines (ChatGPT, Perplexity, Gemini, Google AI). It checks Name-Address-Phone (NAP) consistency across 5 major sources and generates optimized content for Google My Business.
+
+**Key Features:**
+- NAP Consistency Audit (5 sources: Google, Yelp, Facebook, LinkedIn, BBB)
+- GEO Visibility Score (0-100)
+- Optimized GMB content generation via AI
+- Competitor analysis
+- Review tracking and response generation
+- JSON-LD schema for structured data
+- Multi-business dashboard
+- Downloadable audit reports
+
+## API Documentation
+
+### Endpoints
+
+#### POST /api/audit
+Audit a business's NAP consistency across directories.
+
+**Request:**
+```json
+{
+  "businessName": "Acme Plumbing",
+  "city": "San Francisco",
+  "state": "CA"
+}
+```
+
+**Response:**
+```json
+{
+  "score": 82,
+  "issues": ["Phone mismatch on Yelp", "Missing address on LinkedIn"],
+  "entries": [
+    {
+      "source": "google",
+      "name": "Acme Plumbing",
+      "address": "123 Main St, San Francisco, CA 94105",
+      "phone": "(415) 555-0100",
+      "status": "match"
+    }
+  ],
+  "canonical": {
+    "name": "Acme Plumbing",
+    "address": "123 Main St, San Francisco, CA 94105",
+    "phone": "(415) 555-0100"
+  }
+}
+```
+
+#### POST /api/generate
+Generate optimized Google My Business content.
+
+**Request:**
+```json
+{
+  "businessName": "Acme Plumbing",
+  "city": "San Francisco",
+  "state": "CA",
+  "audit": { /* NAPAudit from /api/audit */ }
+}
+```
+
+**Response:**
+```json
+{
+  "description": "Professional plumbing services...",
+  "shortDescription": "Expert plumbing in San Francisco.",
+  "keywords": ["plumber", "emergency plumbing", ...],
+  "reviewTemplates": ["Thank you for the review!"],
+  "schema": "{ JSON-LD LocalBusiness }"
+}
+```
+
+#### POST /api/schema
+Generate LocalBusiness JSON-LD schema.
+
+**Request:**
+```json
+{
+  "businessName": "Acme Plumbing",
+  "city": "San Francisco",
+  "state": "CA",
+  "audit": { /* NAPAudit */ }
+}
+```
+
+**Response:**
+```json
+{
+  "schemaJson": "{ @context: ... }"
+}
+```
+
+#### POST /api/competitors
+Find and rank competitor businesses.
+
+**Request:**
+```json
+{
+  "trade": "plumber",
+  "city": "San Francisco",
+  "state": "CA"
+}
+```
+
+**Response:**
+```json
+[
+  {
+    "rank": 1,
+    "name": "ABC Plumbing Co",
+    "url": "https://...",
+    "snippet": "Professional plumbing services...",
+    "source": "abcplumbing.com"
+  }
+]
+```
+
+#### POST /api/reviews
+Search for customer reviews from major platforms.
+
+**Request:**
+```json
+{
+  "businessName": "Acme Plumbing",
+  "city": "San Francisco"
+}
+```
+
+**Response:**
+```json
+[
+  {
+    "source": "yelp.com",
+    "snippet": "Great service, highly recommend!",
+    "rating": 5,
+    "url": "https://..."
+  }
+]
+```
+
+#### POST /api/reviews/respond
+Generate professional response templates for reviews.
+
+**Request:**
+```json
+{
+  "businessName": "Acme Plumbing",
+  "city": "San Francisco",
+  "reviews": [ /* ReviewResult array */ ]
+}
+```
+
+**Response:**
+```json
+{
+  "responses": [
+    "Thank you for choosing us!",
+    "We appreciate your feedback..."
+  ]
+}
+```
+
+#### GET /api/directory
+Get structured directory of all endpoints and capabilities.
+
+**Response:** JSON object with tool metadata, all endpoints, example queries.
+
+## Web Pages
+
+- `/` — Main audit interface
+- `/dashboard` — Multi-business management
+- `/directory` — Public business directory (AI-readable)
+- `/report` — Printable audit report
+- `/api/directory` — Structured API documentation (JSON)
+
+## Environment Variables
+
+```
+BRAVE_API_KEY=your_brave_api_key
+GROQ_API_KEY=your_groq_api_key
+GROQ_MODEL=llama-3.3-70b-versatile
+```
+
+## Example Workflow
+
+1. Run audit: `POST /api/audit` with business details
+2. Generate content: `POST /api/generate` with audit result
+3. Get schema: `POST /api/schema` for structured data
+4. Find reviews: `POST /api/reviews` to discover feedback
+5. Generate responses: `POST /api/reviews/respond` for templates
+6. Save to dashboard: Automatically saved to browser localStorage
+
+## Data Persistence
+
+All audits are saved to browser localStorage. No server-side database required. Exports available via `/dashboard`.
+
+## For LLM Crawlers
+
+- Start at: https://geo-score.com/directory (HTML directory page)
+- API docs: https://geo-score.com/api/directory (JSON)
+- LLM guide: https://geo-score.com/llms.txt (this file)
+- Robots.txt: https://geo-score.com/robots.txt
+
+The `/directory` page includes structured JSON-LD data for each business, making it easily parseable by LLM systems.
+
+## Contact & Support
+
+GEO Score helps local businesses optimize visibility for AI search engines.
+Visit https://geo-score.com for more information.

@@ -1,0 +1,212 @@
+{
+  "project": {
+    "name": "AI Citation Tracker & GEO Visibility Engine",
+    "version": "2.0.0",
+    "description": "Production-ready module for monitoring AI search citations, scoring GEO visibility, and providing actionable optimization steps",
+    "target_integration": "NAP/GEO Optimization App"
+  },
+  "modules": {
+    "1_citation_scanner": {
+      "status": "core",
+      "description": "Automated querying and extraction from AI platforms",
+      "priority": 1,
+      "estimated_effort": "3-4 days"
+    },
+    "2_geo_scoring_engine": {
+      "status": "core",
+      "description": "Proprietary GEO Visibility Score calculation",
+      "priority": 1,
+      "estimated_effort": "2-3 days"
+    },
+    "3_competitor_intelligence": {
+      "status": "core",
+      "description": "Track and compare competitor AI citations",
+      "priority": 2,
+      "estimated_effort": "2-3 days"
+    },
+    "4_alert_system": {
+      "status": "core",
+      "description": "Proactive notifications for citation changes",
+      "priority": 2,
+      "estimated_effort": "2 days"
+    },
+    "5_action_engine": {
+      "status": "differentiator",
+      "description": "Turn insights into prioritized fix lists with impact predictions",
+      "priority": 3,
+      "estimated_effort": "3-4 days"
+    },
+    "6_trend_dashboard": {
+      "status": "frontend",
+      "description": "Visual tracking and reporting interface",
+      "priority": 3,
+      "estimated_effort": "4-5 days"
+    },
+    "7_report_generator": {
+      "status": "premium",
+      "description": "PDF/white-label reports for agencies",
+      "priority": 4,
+      "estimated_effort": "2-3 days"
+    }
+  },
+  "data_model": {
+    "entities": [
+      "Business",
+      "Scan",
+      "AICitation",
+      "GEOScore",
+      "Competitor",
+      "Alert",
+      "ActionItem",
+      "Report"
+    ]
+  },
+  "api_specification": {
+    "version": "v1",
+    "base_url": "/api/v1",
+    "authentication": "Bearer token (JWT)",
+    "endpoint_groups": [
+      "businesses",
+      "scans",
+      "geo_scores",
+      "competitors",
+      "citations",
+      "alerts",
+      "action_items",
+      "reports",
+      "trends",
+      "webhooks"
+    ]
+  },
+  "scoring_algorithm": {
+    "name": "GEO Visibility Score v2.0",
+    "components": {
+      "visibility": {
+        "weight": 0.4,
+        "formula": "min(100, (mention_rate * 100 * 0.40) + (top_3_rate * 100 * 0.35) + (rank_1_rate * 100 * 0.25))"
+      },
+      "authority": {
+        "weight": 0.35,
+        "formula": "(direct * 1.0 + listed * 0.7 + contextual * 0.3) / total_mentions * 100"
+      },
+      "momentum": {
+        "weight": 0.25,
+        "formula": "clamp(50 + (trend_velocity * 500), 0, 100)"
+      }
+    },
+    "overall": "round(visibility * 0.40 + authority * 0.35 + momentum * 0.25, 1)",
+    "benchmarks": {
+      "0-25": "Invisible",
+      "26-50": "Inconsistent",
+      "51-75": "Solid",
+      "76-90": "Authority",
+      "91-100": "Dominant"
+    }
+  },
+  "query_templates": {
+    "service_location": [
+      "best {trade} in {city}",
+      "top rated {trade} near {neighborhood}",
+      "recommended {trade} in {city} {state}",
+      "emergency {trade} {city}"
+    ],
+    "problem_location": [
+      "my roof is leaking who should I call in {city}",
+      "burst pipe emergency {city}",
+      "kitchen remodel contractor {neighborhood}"
+    ],
+    "comparison": [
+      "best {trade} vs {trade} in {city}",
+      "who is better {business_a} or {business_b} in {city}"
+    ],
+    "voice_style": [
+      "find me a {trade} near me",
+      "who should I call for {problem} in {city}"
+    ]
+  },
+  "ai_sources": [
+    "perplexity",
+    "chatgpt",
+    "google_ai",
+    "google_ask_maps",
+    "bing_copilot",
+    "claude",
+    "gemini"
+  ],
+  "background_jobs": [
+    "weekly_baseline_scan",
+    "daily_alert_check",
+    "monthly_report_generation",
+    "competitor_discovery"
+  ],
+  "notification_templates": [
+    "citation_drop",
+    "competitor_surge",
+    "new_competitor",
+    "rank_improvement",
+    "weekly_summary",
+    "score_milestone"
+  ],
+  "frontend_components": [
+    "geo_score_card",
+    "mention_timeline",
+    "ai_source_breakdown",
+    "competitor_leaderboard",
+    "recent_citations",
+    "action_items_panel",
+    "trend_dashboard"
+  ],
+  "competitive_moat": [
+    "data_flywheel",
+    "score_ownership",
+    "benchmark_database",
+    "api_ecosystem",
+    "certification_program"
+  ],
+  "implementation_roadmap": {
+    "phase_1_mvp": {
+      "duration": "2 weeks",
+      "goal": "Working end-to-end for single business",
+      "features": [
+        "Business registration",
+        "Perplexity API",
+        "Basic extraction",
+        "GEO Score",
+        "Simple dashboard"
+      ]
+    },
+    "phase_2_core": {
+      "duration": "3 weeks",
+      "goal": "Fully functional for multiple businesses",
+      "features": [
+        "Multi-source scanning",
+        "Competitor tracking",
+        "Alert system",
+        "Trend charts",
+        "Action items"
+      ]
+    },
+    "phase_3_scale": {
+      "duration": "3 weeks",
+      "goal": "Production-ready with agency features",
+      "features": [
+        "Background jobs",
+        "PDF reports",
+        "White-label",
+        "API endpoints",
+        "Advanced analytics"
+      ]
+    },
+    "phase_4_differentiation": {
+      "duration": "4 weeks",
+      "goal": "Category-leading feature set",
+      "features": [
+        "AI recommendations",
+        "Auto schema deploy",
+        "Review automation",
+        "Competitor simulation",
+        "Certification program"
+      ]
+    }
+  }
+}
